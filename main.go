@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -89,7 +90,7 @@ func main() {
 			Duration: lastRunDuration,
 		})
 	}))
-	http.Handle("/metrics", prometheus.Handler())
+	http.Handle("/metrics", promhttp.Handler())
 
 	log.Printf("Listening on address %s", *listenAddr)
 	if err := http.ListenAndServe(*listenAddr, nil); err != nil {
